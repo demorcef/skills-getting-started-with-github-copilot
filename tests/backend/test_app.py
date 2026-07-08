@@ -21,10 +21,13 @@ def reset_activities():
 
 
 def test_unregister_participant_removes_them_from_activity():
+    # Arrange
     reset_activities()
 
+    # Act
     response = client.delete("/activities/Chess Club/participants/alice@example.com")
 
+    # Assert
     assert response.status_code == 200
     assert response.json() == {
         "message": "Unregistered alice@example.com from Chess Club"
@@ -33,7 +36,12 @@ def test_unregister_participant_removes_them_from_activity():
 
 
 def test_activities_endpoint_disables_caching():
+    # Arrange
+    # No setup required for this endpoint test.
+
+    # Act
     response = client.get("/activities")
 
+    # Assert
     assert response.status_code == 200
     assert response.headers["cache-control"].lower().startswith("no-store")
